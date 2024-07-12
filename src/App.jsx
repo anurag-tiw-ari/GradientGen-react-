@@ -1,33 +1,42 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [colour1, setColour1] = useState("#27aaa7");
+  const [colour2, setColour2] = useState("#2b1381");
+
+  function handleButtonLeft(){
+     let num=Math.floor((Math.random()*16777215));
+     //console.log(num)
+    let code="#"+num.toString(16);
+    let paddedCodeStr = code.padEnd(6, "0");
+    //console.log(paddedCodeStr)
+    setColour1(paddedCodeStr)
+  }
+  function handleButtonRight(){
+    let num=Math.floor((Math.random()*16777215));
+    //console.log(num)
+    let code="#"+num.toString(16)
+    let paddedCodeStr = code.padEnd(6, "0");
+   // console.log(paddedCodeStr)
+   setColour2(paddedCodeStr)
+ }
+
+ function handleCopy(e){
+   navigator.clipboard.writeText(e.target.innerText);
+ }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+        <section className="background" style={{ backgroundImage: `linear-gradient(45deg, ${colour1}, ${colour2})` }}>
+          <div className="buttons">
+          <button class="btn-left" onClick={handleButtonLeft}>{colour1}</button>
+          <button class="btn-right" onClick={handleButtonRight}>{colour2}</button>
+          </div>
+          <div className="copy-code" onClick={(e)=>{
+            handleCopy(e)
+          }}>background-image: linear-gradient(45deg,{colour1},{colour2});</div>
+          </section>  
     </>
   )
 }
